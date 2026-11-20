@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sistem Penasihat Akademik – DEE</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-brand">
+    <div class="header-logo">PA</div>
+    <div>
+      <div class="header-title">Sistem Penasihat Akademik</div>
+      <div class="header-subtitle">Diploma Kejuruteraan Elektrik &amp; Elektronik</div>
+    </div>
+  </div>
+  <div class="header-info">Sesi 2023/2024 &nbsp;|&nbsp; Politeknik Malaysia</div>
+</header>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- SIDEBAR: Senarai Pelajar -->
+  <aside class="sidebar">
+    <div class="sidebar-section-title">Senarai Pelajar</div>
+    <ul class="student-list" id="studentList"></ul>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- Welcome Screen -->
+    <div id="welcomeScreen" class="welcome-screen">
+      <div style="font-size:48px;margin-bottom:16px;">🎓</div>
+      <h2>Selamat Datang ke Sistem Penasihat Akademik</h2>
+      <p>Sila pilih nama pelajar di panel kiri untuk melihat rekod akademik.</p>
+    </div>
+
+    <!-- Profile Section (hidden until student selected) -->
+    <div id="profileSection" style="display:none;">
+
+      <!-- Profile Header -->
+      <div class="profile-header">
+        <div class="profile-avatar" id="profileAvatar">PA</div>
+        <div class="profile-info">
+          <h2 id="profileNama">-</h2>
+          <p id="profileMatrik">-</p>
+          <p id="profileKontak">-</p>
+        </div>
+        <div class="profile-meta">
+          <span class="sem-badge" id="profileSem">Semester -</span>
+        </div>
+      </div>
+
+      <!-- Main Tab Navigation -->
+      <div class="tab-nav">
+        <button class="tab-btn active" data-tab="tab-subjek"     onclick="switchMainTab('tab-subjek')">📚 Senarai Subjek</button>
+        <button class="tab-btn"        data-tab="tab-pendaftaran" onclick="switchMainTab('tab-pendaftaran')">📋 Pendaftaran Kursus</button>
+        <button class="tab-btn"        data-tab="tab-slip"        onclick="switchMainTab('tab-slip')">📊 Slip Peperiksaan</button>
+        <button class="tab-btn"        data-tab="tab-amaran"      onclick="switchMainTab('tab-amaran')">⚠️ Surat Amaran</button>
+        <button class="tab-btn"        data-tab="tab-ketidakhadiran" onclick="switchMainTab('tab-ketidakhadiran')">🗓️ Ketidakhadiran &amp; MC</button>
+        <button class="tab-btn"        data-tab="tab-anugerah"    onclick="switchMainTab('tab-anugerah')">🏆 Anugerah &amp; Sijil</button>
+      </div>
+
+      <!-- =============================================
+           TAB 1: SENARAI SUBJEK MENGIKUT SEMESTER
+           ============================================= -->
+      <div id="tab-subjek" class="tab-content active">
+        <div class="card">
+          <div class="card-title">
+            📚 Senarai Subjek Mengikut Semester
+          </div>
+          <!-- Semester Tabs -->
+          <div class="sem-tabs" id="subjekSemTabs">
+            <button class="sem-tab-btn active" data-sem="1" onclick="renderSubjek(1)">Semester 1</button>
+            <button class="sem-tab-btn"        data-sem="2" onclick="renderSubjek(2)">Semester 2</button>
+            <button class="sem-tab-btn"        data-sem="3" onclick="renderSubjek(3)">Semester 3</button>
+            <button class="sem-tab-btn"        data-sem="4" onclick="renderSubjek(4)">Semester 4</button>
+            <button class="sem-tab-btn"        data-sem="5" onclick="renderSubjek(5)">Semester 5</button>
+          </div>
+          <div id="subjekContent"></div>
+        </div>
+      </div>
+
+      <!-- =============================================
+           TAB 2: PENDAFTARAN KURSUS
+           ============================================= -->
+      <div id="tab-pendaftaran" class="tab-content">
+        <div class="card">
+          <div class="card-title">
+            📋 Pendaftaran Kursus Mengikut Semester
+          </div>
+          <div class="sem-tabs" id="pendaftaranSemTabs">
+            <button class="sem-tab-btn active" data-sem="1" onclick="renderPendaftaran(1)">Semester 1</button>
+            <button class="sem-tab-btn"        data-sem="2" onclick="renderPendaftaran(2)">Semester 2</button>
+            <button class="sem-tab-btn"        data-sem="3" onclick="renderPendaftaran(3)">Semester 3</button>
+            <button class="sem-tab-btn"        data-sem="4" onclick="renderPendaftaran(4)">Semester 4</button>
+            <button class="sem-tab-btn"        data-sem="5" onclick="renderPendaftaran(5)">Semester 5</button>
+          </div>
+          <div id="pendaftaranContent"></div>
+        </div>
+      </div>
+
+      <!-- =============================================
+           TAB 3: SLIP PEPERIKSAAN
+           ============================================= -->
+      <div id="tab-slip" class="tab-content">
+        <div class="card">
+          <div class="card-title">
+            📊 Slip Peperiksaan Mengikut Semester
+          </div>
+          <div class="sem-tabs" id="slipSemTabs">
+            <button class="sem-tab-btn active" data-sem="1" onclick="renderSlip(1)">Semester 1</button>
+            <button class="sem-tab-btn"        data-sem="2" onclick="renderSlip(2)">Semester 2</button>
+            <button class="sem-tab-btn"        data-sem="3" onclick="renderSlip(3)">Semester 3</button>
+            <button class="sem-tab-btn"        data-sem="4" onclick="renderSlip(4)">Semester 4</button>
+            <button class="sem-tab-btn"        data-sem="5" onclick="renderSlip(5)">Semester 5</button>
+          </div>
+          <div id="slipContent"></div>
+        </div>
+      </div>
+
+      <!-- =============================================
+           TAB 4: SURAT AMARAN KETIDAKHADIRAN
+           ============================================= -->
+      <div id="tab-amaran" class="tab-content">
+        <div class="card">
+          <div class="card-title">
+            ⚠️ Surat Amaran Ketidakhadiran Mengikut Semester
+          </div>
+          <div class="sem-tabs" id="amaranSemTabs">
+            <button class="sem-tab-btn active" data-sem="1" onclick="renderAmaran(1)">Semester 1</button>
+            <button class="sem-tab-btn"        data-sem="2" onclick="renderAmaran(2)">Semester 2</button>
+            <button class="sem-tab-btn"        data-sem="3" onclick="renderAmaran(3)">Semester 3</button>
+            <button class="sem-tab-btn"        data-sem="4" onclick="renderAmaran(4)">Semester 4</button>
+            <button class="sem-tab-btn"        data-sem="5" onclick="renderAmaran(5)">Semester 5</button>
+          </div>
+          <div id="amaranContent"></div>
+        </div>
+      </div>
+
+      <!-- =============================================
+           TAB 5: KETIDAKHADIRAN & MC
+           ============================================= -->
+      <div id="tab-ketidakhadiran" class="tab-content">
+        <div class="card">
+          <div class="card-title">
+            🗓️ Rekod Ketidakhadiran &amp; MC Mengikut Semester
+          </div>
+          <div class="sem-tabs" id="ketidakhadiranSemTabs">
+            <button class="sem-tab-btn active" data-sem="1" onclick="renderKetidakhadiran(1)">Semester 1</button>
+            <button class="sem-tab-btn"        data-sem="2" onclick="renderKetidakhadiran(2)">Semester 2</button>
+            <button class="sem-tab-btn"        data-sem="3" onclick="renderKetidakhadiran(3)">Semester 3</button>
+            <button class="sem-tab-btn"        data-sem="4" onclick="renderKetidakhadiran(4)">Semester 4</button>
+            <button class="sem-tab-btn"        data-sem="5" onclick="renderKetidakhadiran(5)">Semester 5</button>
+          </div>
+          <div id="ketidakhadiranContent"></div>
+        </div>
+      </div>
+
+      <!-- =============================================
+           TAB 6: ANUGERAH & SIJIL
+           ============================================= -->
+      <div id="tab-anugerah" class="tab-content">
+        <div class="card">
+          <div class="card-title">
+            🏆 Anugerah &amp; Sijil Pelajar
+          </div>
+          <div id="anugerahContent"></div>
+        </div>
+      </div>
+
+    </div><!-- end profileSection -->
+  </main>
+</div><!-- end layout -->
+
+<footer class="footer">
+  Sistem Penasihat Akademik &copy; 2024 &nbsp;|&nbsp; Diploma Kejuruteraan Elektrik &amp; Elektronik
+</footer>
+
+<!-- Scripts -->
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
